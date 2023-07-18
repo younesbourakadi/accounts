@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 17 juil. 2023 à 14:01
+-- Généré le : mar. 18 juil. 2023 à 14:53
 -- Version du serveur : 8.0.31
--- Version de PHP : 8.1.13
+-- Version de PHP : 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -225,60 +225,60 @@ INSERT INTO `transaction` (`id_transaction`, `name`, `amount`, `date_transaction
 (149, 'Reboursement sécurité sociale', '20.00', '2023-03-31', 9),
 (150, 'Bar', '-15.00', '2023-04-05', 7),
 (151, 'Loyer de avril 2023', '-432.00', '2023-04-05', 1),
-(152, 'Course Carrefour', '-25.00', '2023-04-06', 5),
+(152, 'Course Carrefour', '-25.00', '2023-04-06', NULL),
 (153, 'Facture électricité', '-78.00', '2023-04-08', 1),
 (154, 'BGK', '-18.00', '2023-04-12', 7),
-(155, 'RDV médecin', '-25.00', '2023-04-13', 9),
+(155, 'RDV médecin', '-25.00', '2023-04-13', NULL),
 (156, 'Essence voiture', '-86.00', '2023-04-16', 8),
 (157, 'Abonnement Sosh mobile', '-15.00', '2023-04-16', 4),
 (158, 'Course Biocoop', '-71.00', '2023-04-20', 5),
 (159, 'Bar', '-32.00', '2023-04-21', 7),
 (160, 'Billets de train Paris', '-72.00', '2023-04-24', 6),
-(161, 'KFC', '-16.00', '2023-04-25', 7),
+(161, 'KFC', '-16.00', '2023-04-25', NULL),
 (162, 'Abonnement Netflix', '-13.00', '2023-04-25', 4),
 (163, 'Virement salaire avril 2023', '1326.00', '2023-04-30', 2),
 (164, 'Reboursement sécurité sociale', '20.00', '2023-05-01', 9),
 (165, 'Essence voiture', '-88.00', '2023-05-03', 8),
 (166, 'Course Carrefour', '-57.00', '2023-05-04', 5),
-(167, 'Loyer de mai 2023', '-438.00', '2023-05-05', 1),
+(167, 'Loyer de mai 2023', '-438.00', '2023-05-05', NULL),
 (168, 'Bar', '-30.00', '2023-05-07', 7),
 (169, 'Facture électricité', '-80.00', '2023-05-08', 1),
 (170, 'RDV dentiste', '-60.00', '2023-05-14', 9),
 (171, 'Abonnement Sosh mobile', '-15.00', '2023-05-16', 4),
 (172, 'Course Carrefour', '-61.00', '2023-05-18', 5),
-(173, 'Essence voiture', '-90.00', '2023-05-20', 8),
+(173, 'Essence voiture', '-90.00', '2023-05-20', NULL),
 (174, 'Bar', '-10.00', '2023-05-23', 7),
 (175, 'Abonnement Netflix', '-13.00', '2023-05-25', 4),
 (176, 'Virement salaire mai 2023', '1326.00', '2023-05-30', 2),
-(177, 'Reboursement sécurité sociale', '48.00', '2023-06-01', 9),
+(177, 'Reboursement sécurité sociale', '48.00', '2023-06-01', NULL),
 (178, 'Course Biocoop', '-57.00', '2023-06-01', 5),
 (179, 'Remise de chèque 1136530 Papa', '600.00', '2023-06-02', 3),
-(180, 'Loyer de juin 2023', '-432.00', '2023-06-05', 1),
+(180, 'Loyer de juin 2023', '-432.00', '2023-06-05', NULL),
 (181, 'Essence voiture', '-91.00', '2023-06-06', 8),
 (182, 'Bar', '-17.00', '2023-06-08', 7),
 (183, 'Facture électricité', '-81.00', '2023-06-08', 1),
 (184, 'Facture eau', '-152.00', '2023-06-08', 1),
-(185, 'RDV dentiste', '-60.00', '2023-06-14', 9),
+(185, 'RDV dentiste', '-60.00', '2023-06-14', NULL),
 (186, 'Course Carrefour', '-61.00', '2023-06-15', 5),
 (187, 'Abonnement Sosh mobile', '-15.00', '2023-06-16', 4),
 (188, 'Salle de sport', '-69.00', '2023-06-20', 7),
-(189, 'Essence voiture', '-93.00', '2023-06-23', 8),
+(189, 'Essence voiture', '-93.00', '2023-06-23', NULL),
 (190, 'Bar', '-15.00', '2023-06-24', 7),
 (191, 'Abonnement Netflix', '-13.00', '2023-06-25', 4),
 (192, 'Course Biocoop', '-137.00', '2023-06-29', 5),
 (193, 'Virement salaire juin 2023', '1326.00', '2023-06-30', 2),
 (194, 'Reboursement sécurité sociale', '48.00', '2023-07-02', 9),
-(195, 'Billets de train Lille', '-89.00', '2023-07-02', 6),
+(195, 'Billets de train Lille', '-89.00', '2023-07-02', NULL),
 (196, 'Loyer de juillet 2023', '-432.00', '2023-07-05', 1),
 (197, 'Facture électricité', '-83.00', '2023-07-08', 1),
 (198, 'Essence voiture', '-94.00', '2023-07-10', 8),
-(199, 'Bar', '-32.00', '2023-07-10', 7),
+(199, 'Bar', '-32.00', '2023-07-10', NULL),
 (200, 'BGK', '-18.00', '2023-07-13', 7),
-(201, 'Course Carrefour', '-141.00', '2023-07-13', 5),
+(201, 'Course Carrefour', '-141.00', '2023-07-13', NULL),
 (202, 'RDV médecin', '-25.00', '2023-07-15', 9),
-(203, 'Abonnement Sosh mobile', '-15.00', '2023-07-16', 4),
+(203, 'Abonnement Sosh mobile', '-15.00', '2023-07-16', NULL),
 (204, 'Virement salaire juillet 2023', '1326.00', '2023-07-30', 2),
-(205, 'Reboursement sécurité sociale', '20.00', '2023-08-02', 9);
+(205, 'Reboursement sécurité sociale', '20.00', '2023-08-02', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
