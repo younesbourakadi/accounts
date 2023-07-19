@@ -70,6 +70,30 @@ function formatBalance($balance)
 {
     return ($balance >= 0 ? '+' : '-') . formatAmount(abs($balance));
 }
+
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["updateTransaction"])) {
+    $transactionId = $_POST["transactionId"];
+    $updatedTransaction = [
+        "name" => $_POST["name"],
+        "date_transaction" => $_POST["date"],
+        "amount" => floatval($_POST["amount"]),
+        "id_category" => $_POST["category"],
+    ];
+    $isUpdated = $homeController->updateTransaction($transactionId, $updatedTransaction);
+
+
+    if ($isUpdated) {
+        var_dump($isUpdated);
+
+        header("Location: index.php?page=home");
+        exit;
+    } else {
+    }
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -147,37 +171,73 @@ function formatBalance($balance)
                     <tbody>
                         <?php foreach ($transactions as $transaction) { ?>
                             <tr>
-                                <td width="50" class="ps-3">
-                                    <?php if (!empty($transaction['icon_class'])) { ?>
-                                        <i class="<?= htmlspecialchars($transaction['icon_class']) ?> fs-3"></i>
-                                    <?php } ?>
-                                </td>
-                                <td>
-                                    <time datetime="<?= htmlspecialchars($transaction['date_transaction']) ?>" class="d-block fst-italic fw-light"><?= date('d/m/Y', strtotime($transaction['date_transaction'])) ?></time>
-                                    <?= htmlspecialchars($transaction['name']) ?>
-                                </td>
-                                <td class="text-end">
-                                    <?php if ($transaction['amount'] < 0) { ?>
-                                        <span class="rounded-pill text-nowrap bg-warning-subtle px-2">
-                                            <?= formatAmount(abs($transaction['amount'])) ?>
-                                        </span>
-                                    <?php } else { ?>
-                                        <span class="rounded-pill text-nowrap bg-success-subtle px-2">
-                                            <?= formatAmount($transaction['amount']) ?>
-                                        </span>
-                                    <?php } ?>
-                                </td>
+                                <td><?= htmlspecialchars($transaction['name']) ?></td>
+                                <td><?= htmlspecialchars($transaction['date_transaction']) ?></td>
+                                <td><?= htmlspecialchars($transaction['amount']) ?> €</td>
+                                <td><?= $transactionModel->getCategoryNameById($transaction['id_category']) ?></td>
                                 <td class="text-end text-nowrap">
-                                    <a href="#" class="btn btn-outline-primary btn-sm rounded-circle">
+                                    <button type="button" class="btn btn-outline-primary btn-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#editModal<?= $transaction['id_transaction'] ?>">
                                         <i class="bi bi-pencil"></i>
-                                    </a>
+                                    </button>
                                     <a href="#" class="btn btn-outline-danger btn-sm rounded-circle">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
                             </tr>
+
+                            <div class="modal fade" id="editModal<?= $transaction['id_transaction'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $transaction['id_transaction'] ?>" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel<?= $transaction['id_transaction'] ?>">Modifier l'opération</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post">
+                                                <div class="mb-3">
+                                                    <label for="name" class="form-label">Nom de l'opération *</label>
+                                                    <input type="text" class="form-control" name="name" id="name" value="<?= htmlspecialchars($transaction['name']) ?>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="date" class="form-label">Date *</label>
+                                                    <input type="date" class="form-control" name="date" id="date" value="<?= htmlspecialchars($transaction['date_transaction']) ?>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="amount" class="form-label">Montant *</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="amount" id="amount" value="<?= htmlspecialchars($transaction['amount']) ?>" required>
+                                                        <span class="input-group-text">€</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="category" class="form-label">Catégorie</label>
+                                                    <select class="form-select" name="category" id="category">
+                                                        <option value="" selected>Aucune catégorie</option>
+                                                        <option value="1" <?= ($transaction['id_category'] == 1) ? 'selected' : '' ?>>Habitation</option>
+                                                        <option value="2" <?= ($transaction['id_category'] == 2) ? 'selected' : '' ?>>Travail</option>
+                                                        <option value="3" <?= ($transaction['id_category'] == 3) ? 'selected' : '' ?>>Cadeau</option>
+                                                        <option value="4" <?= ($transaction['id_category'] == 4) ? 'selected' : '' ?>>Numérique</option>
+                                                        <option value="5" <?= ($transaction['id_category'] == 5) ? 'selected' : '' ?>>Alimentation</option>
+                                                        <option value="6" <?= ($transaction['id_category'] == 6) ? 'selected' : '' ?>>Voyage</option>
+                                                        <option value="7" <?= ($transaction['id_category'] == 7) ? 'selected' : '' ?>>Loisir</option>
+                                                        <option value="7" <?= ($transaction['id_category'] == 8) ? 'selected' : '' ?>>Voiture</option>
+                                                        <option value="7" <?= ($transaction['id_category'] == 9) ? 'selected' : '' ?>>Santé</option>
+                                                    </select>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary btn-lg" name="updateTransaction">Modifier</button>
+                                                </div>
+                                                <input type="hidden" name="transactionId" value="<?= $transaction['id_transaction'] ?>">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <?php } ?>
                     </tbody>
+
+
                 </table>
             </div>
             <div class="card-footer">

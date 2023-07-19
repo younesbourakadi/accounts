@@ -2,7 +2,7 @@
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-// Vérifier si le formulaire a été soumis
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once '../models/TransactionModel.php';
     require_once '../controllers/HomeController.php';
@@ -64,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $date = $_POST['date'];
         $category = $_POST['category'];
 
-        // Ajouter l'opération à la base de données en utilisant le contrôleur
         $homeController->addTransaction($name, $amount, $date, $category);
     }
 }
@@ -144,13 +143,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="category" class="form-label">Catégorie</label>
                         <select class="form-select" name="category" id="category">
                             <option value="" selected>Aucune catégorie</option>
-                            <option value="1">Nourriture</option>
-                            <option value="2">Loisir</option>
-                            <option value="3">Travail</option>
-                            <option value="4">Voyage</option>
-                            <option value="5">Sport</option>
-                            <option value="6">Habitat</option>
-                            <option value="7">Cadeaux</option>
+                            <option value="1">Habitation</option>
+                            <option value="2">Travail</option>
+                            <option value="3">Cadeau</option>
+                            <option value="4">Numérique</option>
+                            <option value="5">Alimentation</option>
+                            <option value="6">Voyage</option>
+                            <option value="7">Loisir</option>
+                            <option value="7">Voiture</option>
+                            <option value="7">Santé</option>
                         </select>
                     </div>
                     <div class="text-center">

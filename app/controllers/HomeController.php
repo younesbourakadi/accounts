@@ -27,7 +27,15 @@ class HomeController
 
     public function addTransaction($name, $amount, $date, $category)
     {
-        // Valider les données si nécessaire
         return $this->transactionModel->addTransaction($name, $amount, $date, $category);
+    }
+
+    public function updateTransaction($transactionId, $updatedTransaction)
+    {
+        if (empty($updatedTransaction['name']) || empty($updatedTransaction['date_transaction']) || empty($updatedTransaction['amount']) || empty($updatedTransaction['id_category'])) {
+            return false;
+        }
+
+        return $this->transactionModel->updateTransaction($transactionId, $updatedTransaction);
     }
 }
