@@ -38,4 +38,9 @@ class HomeController
 
         return $this->transactionModel->updateTransaction($transactionId, $updatedTransaction);
     }
+
+    public function deleteTransaction($transactionId)
+    {
+        return $this->transactionModel->deleteTransactionById($transactionId);
+    }
 }

@@ -89,7 +89,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["updateTransaction"]))
         header("Location: index.php?page=home");
         exit;
     } else {
+        echo 'La transaction n\'a pas pu être modifiée.';
     }
+}
+
+if (isset($_GET['id'])) {
+    include '../actions/deleteTransaction.php';
 }
 
 
@@ -179,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["updateTransaction"]))
                                     <button type="button" class="btn btn-outline-primary btn-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#editModal<?= $transaction['id_transaction'] ?>">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <a href="#" class="btn btn-outline-danger btn-sm rounded-circle">
+                                    <a href="index.php?page=home&id=<?= $transaction['id_transaction'] ?>" class="btn btn-outline-danger btn-sm rounded-circle">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>

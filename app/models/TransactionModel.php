@@ -65,4 +65,11 @@ class TransactionModel
 
         return $stmt->execute();
     }
+
+    public function deleteTransactionById($transactionId)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM transaction WHERE id_transaction = :id");
+        $stmt->bindParam(':id', $transactionId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }
