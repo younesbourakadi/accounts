@@ -1,35 +1,37 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 require_once '../models/TransactionModel.php';
 require_once '../controllers/HomeController.php';
 
-function getEnvVar($key, $defaultValue = null)
-{
-    $envFilePath = __DIR__ . '/.env';
+// function getEnvVar($key, $defaultValue = null)
+// {
+//     $envFilePath = __DIR__ . '/.env';
 
-    if (file_exists($envFilePath)) {
-        $lines = file($envFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        foreach ($lines as $line) {
-            $parts = explode('=', $line, 2);
-            if (count($parts) === 2) {
-                list($name, $value) = $parts;
-                if ($name === $key) {
-                    return $value;
-                }
-            }
-        }
-    }
+//     if (file_exists($envFilePath)) {
+//         $lines = file($envFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+//         foreach ($lines as $line) {
+//             $parts = explode('=', $line, 2);
+//             if (count($parts) === 2) {
+//                 list($name, $value) = $parts;
+//                 if ($name === $key) {
+//                     return $value;
+//                 }
+//             }
+//         }
+//     }
 
-    return $defaultValue;
-}
+//     return $defaultValue;
+// }
 
+// GUILLAUME !!! METS LES IDENTIFIANTS !!!
 define('DB_HOST', getEnvVar('DB_HOST', 'localhost'));
 define('DB_NAME', getEnvVar('DB_NAME', 'accounts'));
 define('DB_USER', getEnvVar('DB_USER', 'root'));
 define('DB_PASSWORD', getEnvVar('DB_PASSWORD', 'root'));
 
+// Classe DB pour établir une connexion à la base de données
 class DB
 {
     private static $instance = null;
@@ -38,6 +40,7 @@ class DB
     {
     }
 
+    // Méthode statique pour obtenir une instance PDO
     public static function getInstance()
     {
         if (!self::$instance) {
@@ -58,20 +61,22 @@ $pdo = DB::getInstance();
 $transactionModel = new TransactionModel($pdo);
 $homeController = new HomeController($transactionModel);
 
+// Récupération des transactions du mois en cours
+$transactions = $transactionModel->getTransactionsByMonth(date('Y-m'));
 
-$transactions = $transactionModel->getTransactionsByMonth();
-
+// Formater le montant avec le symbole de l'euro (€)
 function formatAmount($amount)
 {
     return number_format($amount, 2) . ' €';
 }
 
+// Formater la balance financière avec un signe positif (+) ou négatif (-)
 function formatBalance($balance)
 {
     return ($balance >= 0 ? '+' : '-') . formatAmount(abs($balance));
 }
 
-
+// Gestion du formulaire de mise à jour d'une transaction
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["updateTransaction"])) {
     $transactionId = $_POST["transactionId"];
     $updatedTransaction = [
@@ -82,10 +87,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["updateTransaction"]))
     ];
     $isUpdated = $homeController->updateTransaction($transactionId, $updatedTransaction);
 
-
     if ($isUpdated) {
         var_dump($isUpdated);
-
         header("Location: index.php?page=home");
         exit;
     } else {
@@ -93,14 +96,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["updateTransaction"]))
     }
 }
 
+// Gestion de la suppression d'une transaction à partir du paramètre GET "id"
 if (isset($_GET['id'])) {
     include '../actions/deleteTransaction.php';
 }
 
-
 $pageTitle = 'Opérations de Juillet 2023';
+
+// Inclusion du fichier "header.php" pour afficher l'en-tête de la page
 include './includes/header.php';
 ?>
+
 
 <div class="container">
     <section class="card mb-4 rounded-3 shadow-sm">
@@ -108,7 +114,7 @@ include './includes/header.php';
             <h2 class="my-0 fw-normal fs-4">Solde aujourd'hui</h2>
         </div>
         <div class="card-body">
-            <p class="card-title pricing-card-title text-center fs-1"><?= formatBalance($homeController->getBalance()) ?></p>
+            <p class="card-title pricing-card-title text-center fs-1"><?= formatBalance($transactionModel->getBalance(date('Y-m'))) ?></p>
         </div>
     </section>
 
@@ -200,37 +206,34 @@ include './includes/header.php';
         <div class="card-footer">
             <nav class="text-center">
                 <ul class="pagination d-flex justify-content-center m-2">
-                    <li class="page-item disabled">
-                        <span class="page-link">
+                    <?php
+                    $dateTime = new DateTime($_GET['month'] ?? date('Y-m'));
+
+                    $prevMonth = clone $dateTime;
+                    $prevMonth->modify('-1 month');
+
+                    $nextMonth = clone $dateTime;
+                    $nextMonth->modify('+1 month');
+                    ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?month=<?php echo $prevMonth->format('Y-m'); ?>">
                             <i class="bi bi-arrow-left"></i>
-                        </span>
+                        </a>
                     </li>
                     <li class="page-item active" aria-current="page">
-                        <span class="page-link">Juillet 2023</span>
+                        <span class="page-link"><?php echo $dateTime->format('Y-m'); ?></span>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="index.php?page=home">Juin 2023</a>
-                    </li>
-                    <li class="page-item">
-                        <span class="page-link">...</span>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="index.php?page=home">
+                        <a class="page-link" href="?month=<?php echo $nextMonth->format('Y-m'); ?>">
                             <i class="bi bi-arrow-right"></i>
                         </a>
                     </li>
                 </ul>
             </nav>
+
         </div>
     </section>
 </div>
-
-
-<footer class="py-3 mt-4 border-top">
-    <p class="text-center text-body-secondary">© 2023 Mes comptes</p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+<?php
+include './includes/footer.php'
+?>
