@@ -20,23 +20,22 @@
             <nav class="col-11 col-md-7">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link link-body-emphasis">Opérations</a>
+                        <a href="index.php" class="nav-link link-body-emphasis">Opérations</a>
                     </li>
                     <li class="nav-item">
-                        <a href="summary.html" class="nav-link link-secondary" aria-current="page">Synthèses</a>
+                        <a href="summary.php" class="nav-link link-secondary" aria-current="page">Synthèses</a>
                     </li>
                     <li class="nav-item">
-                        <a href="categories.html" class="nav-link link-body-emphasis">Catégories</a>
+                        <a href="categories.php" class="nav-link link-body-emphasis">Catégories</a>
                     </li>
                     <li class="nav-item">
-                        <a href="import.html" class="nav-link link-body-emphasis">Importer</a>
+                        <a href="import.php" class="nav-link link-body-emphasis">Importer</a>
                     </li>
                 </ul>
             </nav>
             <form action="" class="col-12 col-md-4" role="search">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Rechercher..."
-                        aria-describedby="button-search">
+                    <input type="text" class="form-control" placeholder="Rechercher..." aria-describedby="button-search">
                     <button class="btn btn-primary" type="submit" id="button-search">
                         <i class="bi bi-search"></i>
                     </button>
